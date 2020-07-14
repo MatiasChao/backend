@@ -2,21 +2,19 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
 
-// guarda el usuario logueado
+// Guarda el usuario logueado
 // api/users/logged
 router.post('/logged',
     userController.createLoggedUser
 )
 
-// elimina el usuario logueado
-// api/users/
-// intentar que me llegue el id.. /users/logged/:id 
+// Eliminar el usuario logueado cuando cierra sesión manualmente
+// api/users/logged
 router.delete('/logged',
     userController.deleteLoggedUser
 )
-//req a call back funtion...
 
-// obtener la info del usuario logueado
+// Obtener la info del usuario logueado
 // api/users/info
 router.get('/info',
     userController.getUserInfo

@@ -1,6 +1,5 @@
 const fetch = require('node-fetch')
 const authUtil = require('../authUtils')
-const { off } = require('../models/LoggedUser')
 
 exports.getRestaurantByCoordinates = async (req, res) => {
     const country = req.body.country
@@ -15,15 +14,10 @@ exports.getRestaurantByCoordinates = async (req, res) => {
         await authUtil.getApiToken()
     }
 
-    // mandar el token de la app por header
-    // hay que mandar el COUNTRY., lo saco del user logged
-    // latitud y long separados por coma
-
     let refreshedApiToken = false;
     let retries = 5;
 
     do {
-        console.log("ENTRE DE NUEVO: ", retries)
         retries--
         await fetch(url, {
             headers: {
@@ -34,15 +28,11 @@ exports.getRestaurantByCoordinates = async (req, res) => {
         .then(
             data => {
                 if(data.code === 'INVALID_TOKEN') {
-                    console.log("Entro a invalid token...")
                     authUtil.refreshApiToken();
                     refreshedApiToken = true;
                 } else {
                     res.send(data)
                 }
-            },
-            err => {
-                console.log("ERROR: ", err)
             }
         )
     } while (refreshedApiToken && retries > 0)
