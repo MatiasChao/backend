@@ -7,7 +7,7 @@ exports.getRestaurantByCoordinates = async (req, res) => {
     const point = req.body.point
     const offset = req.body.offset
     const max = req.body.max
-    const fields = 'name,ratingScore,logo,deliveryTimeMaxMinutes,link'
+    const fields = 'name,ratingScore,logo,deliveryTimeMaxMinutes,link,opened'
 
     const url = `http://stg-api.pedidosya.com/public/v1/search/restaurants?country=${country}&point=${point}&max=${max}&offset=${offset}&fields=${fields}`
 
