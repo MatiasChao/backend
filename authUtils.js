@@ -1,7 +1,6 @@
 const { response } = require('express');
 const express = require('express')
 const router = express.Router()
-
 const fetch = require('node-fetch')
 
 exports.getApiToken = () => {
@@ -15,22 +14,6 @@ exports.refreshApiToken = () => {
 exports.getApiToken = async (expired) => {
 
     let tokenAuth = global.authorizationToken
-    console.log("Llego a getApiToken - -")
-    console.log("tokenAuth: ", tokenAuth)
-    console.log("global.authorizationToken: ", global.authorizationToken)
-    console.log("expired ", expired)
-
-    if(tokenAuth != null) {
-        console.log("PEÑAROL, tokenAuth distinto de null")
-    }
-
-    if(tokenAuth == undefined) {
-        console.log("tokenAuth es undefined")
-    }
-
-    if(!tokenAuth) {
-        console.log("Oceanica")
-    }
 
     if (tokenAuth != undefined && !expired)
         return tokenAuth;
@@ -43,8 +26,6 @@ exports.getApiToken = async (expired) => {
     const authCode = await response.json()
     tokenAuth = authCode.access_token
     global.authorizationToken = tokenAuth
-
-    console.log("Paso validaciones getApiToken: ", tokenAuth)
 
     return tokenAuth
 }

@@ -2,7 +2,6 @@ const { response } = require('express');
 const express = require('express')
 const router = express.Router()
 const authUtil = require('../authUtils')
-
 const fetch = require('node-fetch')
 
 // Servicio para obtener la autenticación de un usuario
@@ -15,7 +14,6 @@ router.post('/user', async (req, res) => {
     // cuando inicia sesión obtiene el auth token de la app
     const authorization = await authUtil.getApiToken()
 
-    //const response = client.get("")
     let response = ''
 
     const refreshedApiToken = false;
@@ -32,11 +30,9 @@ router.post('/user', async (req, res) => {
         .then(
             data => {
                 if(data.code === 'INVALID_TOKEN') {
-                    console.log("Entro a invalid token...")
                     authUtil.refreshApiToken();
                     refreshedApiToken = true;
                 } else if(data.code === 'USR_INVALID_CREDENTIALS') {
-                    console.log("Las credenciales están mal...")
                     res.status(401).json({msg: 'Error en las credenciales del usuario'})
                 } else {
                     res.send(data)
